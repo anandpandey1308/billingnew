@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import Sales from "../models/salesSchema.js";
 import {
   createErrorResponse,
@@ -11,8 +12,9 @@ export const createSale = asyncHandler(async (req, res) => {
   if (!productName || !quantitySold || !totalPrice) {
     throw createError("All fields are required", 400);
   }
-
+  const saleId = crypto.randomBytes(2);
   const sale = await Sales.create({
+    saleId,
     productName,
     quantitySold,
     totalPrice,
